@@ -3,7 +3,8 @@ from pathlib import Path
 
 
 class GPTAgent(object):
-    def __init__(self, key: str | Path, conditioning_message: str, model: str = 'gpt-3.5-turbo'):
+    def __init__(self, key: str | Path, conditioning_message: str = 'You are an helpful assistant',
+                 model: str = 'gpt-3.5-turbo'):
         """
         Initializes the agent.
         :param key: The key for the API. Can be provided either as a raw string or as a path to the file containing it.
@@ -34,7 +35,7 @@ class GPTAgent(object):
         self.messages.append({'role': 'user', 'content': message})
         response = self.client.chat.completions.create(
             model=self.model,
-            messages=self.messages
+            messages=self.messages,
         )
         reply = response.choices[0].message.content
         # Append also GPT reply to history.
